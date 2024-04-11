@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label, input[type=number] {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type=number] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type=submit]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form id="Form">
+        <label for="rech">Rechercher : </label>
+        <input type="var" id="rech" name="rech" required>
+        <input type="submit" value="Valider">
+    </form>
+
+    <script>
+        document.getElementById('Form').addEventListener('submit', function(e) {
+            // Empêche la soumission standard du formulaire
+            e.preventDefault();
+
+            // Récupère la valeur de l'âge du formulaire
+            var rech = document.getElementById('rech').value;
+
+            // URL du Webhook créé sur Make
+            var webhookUrl = 'https://hook.eu1.make.com/i8upxp1qqntik8hjvf9qfu71l8wg46gy';
+
+            // Envoie les données au Webhook via une requête POST
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({rech: rech})
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Traitement en cas de succès
+                console.log('Succès:', data);
+            })
+            .catch((error) => {
+                // Traitement en cas d'erreur
+                console.error('Erreur:', error);
+            });
+        });
+    </script>
+</body>
+</html>
